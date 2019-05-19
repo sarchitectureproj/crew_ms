@@ -1,0 +1,214 @@
+#Test with: http://editor.swagger.io/
+
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Microservicio para la Tripulación
+  description: Elixir + PostgreSQL
+  license:
+    name: Software Architecture 2019-I
+host: 192.168.99.104:4001
+basePath: /api
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /crew:
+    post:
+      summary: Creates a new crew member
+      operationId: createCrew
+      parameters:
+        - name: crew
+          in: body
+          required: true
+          description: Crew Object
+          schema:
+            $ref: '#/definitions/CrewInput'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/SingleCrew'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/GenericError'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/GenericError'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/FieldError'
+    get:
+      summary: Returns all crew members
+      operationId: getAllCrew
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/CrewList'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/GenericError'
+
+  /crew/{id}:
+    get:
+      summary: Returns a crew with the given id
+      operationId: getCrewbyId
+      parameters:
+        - name: id
+          in: path
+          description: The id of the crew member to be returned
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/SingleCrew'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/GenericError'
+        '400':
+            description: Bad Request
+            schema:
+              $ref: '#/definitions/GenericError'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/GenericError'
+
+    put:
+      summary: Updates a crew member with the given id
+      operationId: updateCrew
+      parameters:
+        - name: id
+          in: path
+          description: The id of the crew member to be updated
+          required: true
+          type: integer
+        - name: crew
+          in: body
+          required: true
+          description: Crew Object
+          schema:
+            $ref: '#/definitions/CrewInput'
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/SingleCrew'  
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/GenericError'
+        '400':
+            description: Bad Request
+            schema:
+              $ref: '#/definitions/GenericError'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/GenericError'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/FieldError'
+
+    delete:
+      summary: Deletes a crew member with the given id
+      operationId: deleteCrew
+      parameters:
+        - name: id
+          in: path
+          description: The id of the crew member to be deleted
+          required: true
+          type: integer
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/GenericError'
+        '400':
+            description: Bad Request
+            schema:
+              $ref: '#/definitions/GenericError'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/GenericError'
+definitions:
+
+  Crew:
+    type: object
+    properties:
+      username:
+        type: string
+      name:
+        type: string
+      email:
+        type: string
+      phone_number:
+        type: string
+      role:
+        type: string
+        
+  CrewInput:
+    type: object
+    properties:
+      crew:
+        type: object
+        properties:
+          username:
+            type: string
+          name:
+            type: string
+          email:
+            type: string
+          phone_number:
+            type: string
+          role:
+            type: string
+            
+  CrewList:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Crew'
+          
+  SingleCrew:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Crew'
+
+# Errors
+  GenericError:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          detail:
+            type: string
+  FieldError:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          field:
+            type: array
+            items:
+              type: string

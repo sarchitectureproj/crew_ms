@@ -1,0 +1,27 @@
+version: '2.1'
+
+services:
+  crew-ms:
+    build:
+      context: .
+    environment:
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: crew_ms_dev
+      PGPORT: 5432
+      PGHOST: crew-db
+    ports:
+      - "4001:4001"
+    depends_on:
+      - crew-db
+  crew-db:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
