@@ -3,11 +3,11 @@ defmodule CrewServiceWeb.CrewView do
   alias CrewServiceWeb.CrewView
 
   def render("index.json", %{crew: crew}) do
-    %{data: render_many(crew, CrewView, "crew.json")}
+    render_many(crew, CrewView, "crew.json")
   end
 
   def render("show.json", %{crew: crew}) do
-    %{data: render_one(crew, CrewView, "crew.json")}
+    render_one(crew, CrewView, "crew.json")
   end
 
   def render("crew.json", %{crew: crew}) do
