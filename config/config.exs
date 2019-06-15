@@ -22,6 +22,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+config :paddle, Paddle,
+  host: "192.168.99.105",
+  base: "dc=arqsoft,dc=unal,dc=edu,dc=co",
+  port: 636
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
