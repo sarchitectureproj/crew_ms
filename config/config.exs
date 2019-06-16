@@ -27,7 +27,8 @@ config :paddle, Paddle,
   base: "dc=disem,dc=unal,dc=edu,dc=co",
   port: 389,
   account_subdn: "ou=crew",
-  account_identifier: :cn
+  account_identifier: :cn,
+  timeout: 10000
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
