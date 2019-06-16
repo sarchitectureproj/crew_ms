@@ -39,4 +39,12 @@ defmodule CrewServiceWeb.CrewController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def authenticate(conn, %{"username" => username, "password" => password} ) do
+    case Paddle.authenticate(username, password) do
+      :ok -> send_resp(conn, :ok, "Ok")
+      _ -> send_resp(conn, :unauthorized, "Error")
+    end
+
+  end
 end

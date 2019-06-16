@@ -23,10 +23,11 @@ config :logger, :console,
   metadata: [:user_id]
 
 config :paddle, Paddle,
-  host: "192.168.99.105",
-  base: "dc=arqsoft,dc=unal,dc=edu,dc=co",
-  port: 636
-
+  host: "dnode1.centralus.cloudapp.azure.com",
+  base: "dc=disem,dc=unal,dc=edu,dc=co",
+  port: 389,
+  account_subdn: "ou=crew",
+  account_identifier: :cn
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

@@ -19,9 +19,8 @@ defmodule CrewService.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      applications: [:paddle],
       mod: {CrewService.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :paddle]
     ]
   end
 

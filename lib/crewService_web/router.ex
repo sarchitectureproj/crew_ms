@@ -8,5 +8,6 @@ defmodule CrewServiceWeb.Router do
   scope "/api", CrewServiceWeb do
     pipe_through :api
     resources "/crew", CrewController, except: [:new, :edit]
+    post "/authenticate", CrewController, :authenticate
   end
 end
