@@ -41,6 +41,7 @@ defmodule CrewServiceWeb.CrewController do
   end
 
   def authenticate(conn, %{"username" => username, "password" => password} ) do
+    Paddle.reconnect()
     case Paddle.authenticate(username, password) do
       :ok -> send_resp(conn, :ok, "Ok")
       _ -> send_resp(conn, :unauthorized, "Error")
